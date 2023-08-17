@@ -1,12 +1,12 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PokemonRow from "./PokemonRow";
-import PokemonContex from "../PokemonContex";
 
-function PokemonTable() {
-  const {
-    state: { pokemon, filter },
-    dispatch,
-  } = React.useContext(PokemonContex);
+const PokemonTable = () => {
+  const dispatch = useDispatch();
+  const pokemon = useSelector((state) => state.pokemon);
+  const filter = useSelector((state) => state.filter);
+
   return (
     <table width="100%">
       <tbody>
@@ -29,6 +29,5 @@ function PokemonTable() {
       </tbody>
     </table>
   );
-}
-
+};
 export default PokemonTable;

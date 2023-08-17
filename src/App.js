@@ -1,14 +1,22 @@
 import styled from "@emotion/styled";
 import { CssBaseline } from "@mui/material";
 import React from "react";
+import { createStore } from "redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
 
 import "./App.css";
 import PokemonInfo from "./Components/PokemonInfo";
 import PokemonFilter from "./Components/PokemonFilter";
 import PokemonTable from "./Components/PokemonTable";
-import PokemonContex from "./PokemonContex";
 
-const PokemonReducer = (state, action) => {
+const PokemonReducer = (
+  state = {
+    pokemon: [],
+    filter: "",
+    selectedPokemon: null,
+  },
+  action
+) => {
   switch (action.type) {
     case "SET_FILTER":
       return {
@@ -26,10 +34,11 @@ const PokemonReducer = (state, action) => {
         selectedPokemon: action.payload,
       };
     default:
-      // return state;
-      throw new Error("No Error");
+      return state;
   }
 };
+
+const store = createStore(PokemonReducer);
 const Title = styled.h1`
   text-align: center;
 `;
@@ -45,11 +54,8 @@ const TwoColumnLayout = styled.div`
 `;
 
 function App() {
-  const [state, dispatch] = React.useReducer(PokemonReducer, {
-    pokemon: [],
-    filter: "",
-    selectedPokemon: null,
-  });
+  const dispatch = useDispatch();
+  const pokemon = useSelector((state) => state.pokemon);
 
   React.useEffect(() => {
     fetch("/starting-react/pokemon.json")
@@ -60,30 +66,33 @@ function App() {
           payload: data,
         })
       );
-  }, []);
+  }, [dispatch]); // Include dispatch in the dependency array
 
-  if (!state.pokemon) {
+  if (!pokemon) {
     return <div>Loading data</div>;
   }
 
   return (
-    <PokemonContex.Provider
-      value={{
-        state,
-        dispatch,
-      }}
-    >
-      <PageContainer>
-        <CssBaseline />
-        <Title>Pokemon Search</Title>
-        <TwoColumnLayout>
+    <PageContainer>
+      <CssBaseline />
+      <Title>Pokemon Search</Title>
+      <TwoColumnLayout>
+        <div>
           <PokemonFilter />
           <PokemonTable />
-          <PokemonInfo />
-        </TwoColumnLayout>
-      </PageContainer>
-    </PokemonContex.Provider>
+        </div>
+
+        <PokemonInfo />
+      </TwoColumnLayout>
+    </PageContainer>
   );
 }
 
-export default App;
+// Export the App component as the default export
+export default function WrappedApp() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
