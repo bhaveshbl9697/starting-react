@@ -18,4 +18,5 @@ const PokemonType = PropTypes.shape({
     Speed: PropTypes.number.isRequired,
   }),
 });
+
 export default PokemonType;

@@ -1,20 +1,13 @@
-//important steps to put on github
-// git add .
-// git commit -m "zustand commit"
-// git branch -M main
-// git remote add origin https://github.com/bhaveshbl9697/starting-react.git
-// git push -u origin main
-// npm run predeploy
-// npm run deploy
-
-import styled from "@emotion/styled";
-import { CssBaseline } from "@mui/material";
 import React from "react";
-import "./App.css";
-import PokemonFilter from "./Components/PokemonFilter";
+import styled from "@emotion/styled";
+import CssBaseline from '@mui/material/CssBaseline';
+
 import PokemonInfo from "./Components/PokemonInfo";
+import PokemonFilter from "./Components/PokemonFilter";
 import PokemonTable from "./Components/PokemonTable";
-// importing statements
+
+import "./App.css";
+
 const Title = styled.h1`
   text-align: center;
 `;

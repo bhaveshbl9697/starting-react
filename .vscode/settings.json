@@ -1,0 +1,11 @@
+{
+    "fileheader.Author": "Bhavesh Lande",
+    "fileheader.Email": "bhaveshbl9697@gmail.com",
+    "fileheader.LastModifiedBy": "Bhavesh Lande",
+    "files.autoSave": "onFocusChange",
+    "editor.quickSuggestions": {
+        "comments": "on"
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true
+}
