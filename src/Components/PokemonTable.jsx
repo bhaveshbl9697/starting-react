@@ -10,6 +10,7 @@ function PokemonTable() {
       <tbody>
         {store.filteredPokemon.map((pokemon) => (
           <PokemonRow
+            key={pokemon.id}
             pokemon={pokemon}
             onClick={(pokemon) => store.setSelectedPokemon(pokemon)}
           />
