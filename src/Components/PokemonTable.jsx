@@ -1,33 +1,30 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import useStore from "../store";
 import PokemonRow from "./PokemonRow";
 
 const PokemonTable = () => {
-  const dispatch = useDispatch();
-  const pokemon = useSelector((state) => state.pokemon);
-  const filter = useSelector((state) => state.filter);
+  const pokemonList = useStore((state) => state.pokemon);
+  const setSelectedPokemon = useStore((state) => state.setSelectedPokemon);
+  const filter = useStore((state) => state.filters); // Change this to state.filters
 
   return (
     <table width="100%">
       <tbody>
-        {pokemon
+        {pokemonList
           .filter(({ name: { english } }) =>
-            english.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+            english.toLowerCase().includes(filter.toLowerCase())
           )
           .slice(0, 20)
-          .map((pokemon) => (
+          .map((pokemonItem) => (
             <PokemonRow
-              pokemon={pokemon}
-              onClick={(pokemon) =>
-                dispatch({
-                  type: "SET_SELECTED_POKEMON",
-                  payload: pokemon,
-                })
-              }
+              key={pokemonItem.id}
+              pokemon={pokemonItem}
+              onClick={() => setSelectedPokemon(pokemonItem)}
             />
           ))}
       </tbody>
     </table>
   );
 };
+
 export default PokemonTable;
